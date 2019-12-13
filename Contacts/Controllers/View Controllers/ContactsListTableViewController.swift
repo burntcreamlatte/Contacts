@@ -60,7 +60,7 @@ class ContactsListTableViewController: UITableViewController {
             ContactController.shared.deleteContact(contact: contact) { (success) in
                 if success {
                     DispatchQueue.main.async {
-                        self.contacts.remove(at: index)
+                        ContactController.shared.contacts.remove(at: index)
                         self.tableView.deleteRows(at: [indexPath], with: .fade)
                     }
                 }
