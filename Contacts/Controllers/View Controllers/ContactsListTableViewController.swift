@@ -10,6 +10,7 @@ import UIKit
 
 class ContactsListTableViewController: UITableViewController {
 
+    //not implemented; black diamond attempt
     var contacts = [Contact]() {
         didSet {
             DispatchQueue.main.async {
@@ -31,8 +32,10 @@ class ContactsListTableViewController: UITableViewController {
         }
     }
     
-    //MARK: TODO
-    //viewWillAppear reloadData if does not populate properly
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
 
@@ -51,8 +54,9 @@ class ContactsListTableViewController: UITableViewController {
     //MARK: - Black Diamond: Delete
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let contact = contacts[indexPath.row]
-            guard let index = contacts.firstIndex(of: contact) else { return }
+            // MARK: REVIEW
+            let contact = ContactController.shared.contacts[indexPath.row]
+            guard let index = ContactController.shared.contacts.firstIndex(of: contact) else { return }
             ContactController.shared.deleteContact(contact: contact) { (success) in
                 if success {
                     DispatchQueue.main.async {
