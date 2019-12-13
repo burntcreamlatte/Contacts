@@ -70,6 +70,7 @@ class ContactController {
             let sortedContacts = records.compactMap({ Contact(ckRecord: $0) }).sorted(by: { $0.name < $1.name })
             self.contacts = sortedContacts
             completion(true)
+            print("Successfully fetched contacts.")
         }
     }
     
@@ -101,6 +102,7 @@ class ContactController {
                 completion(false); return
             }
             completion(true)
+            print("Successfully updated contact.")
         }
         privateDB.add(operation)
     }

@@ -10,6 +10,14 @@ import UIKit
 
 class ContactsListTableViewController: UITableViewController {
 
+    var contacts = [Contact]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,8 +51,16 @@ class ContactsListTableViewController: UITableViewController {
     //MARK: - Black Diamond: Delete
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            
+            let contact = contacts[indexPath.row]
+            guard let index = contacts.firstIndex(of: contact) else { return }
+            ContactController.shared.deleteContact(contact: contact) { (success) in
+                if success {
+                    DispatchQueue.main.async {
+                        self.contacts.remove(at: index)
+                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    }
+                }
+            }
         }
     }
 
