@@ -73,10 +73,10 @@ extension Contact: Equatable {
 //        //the entire init'd record would have to return itself, make a property of record: CKRecord? ?
 //        self.init(recordType: ContactStrings.recordTypeKey, recordID: contact.recordID)
 //        self.setValue(contact.name, forKey: ContactStrings.nameKey)
-//        if let phoneNumber = contact.phoneNumber {
+//        if contact.phoneNumber != nil {
 //            self.setValue(contact.phoneNumber, forKey: ContactStrings.phoneNumberKey)
 //        }
-//        if let email = contact.email {
+//        if contact.email != nil {
 //            self.setValue(contact.email, forKey: ContactStrings.emailKey)
 //        }
 //    }
